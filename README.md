@@ -50,7 +50,7 @@ For usage of the tooling built around RIBs, please see the [Tooling section](htt
 To integrate RIBs into your project add the following to your `Podfile`:
 
 ```ruby
-pod 'RIBs', '~> 0.9'
+pod 'RIBs', '~> 1.0'
 ```
 
 #### Carthage
@@ -58,7 +58,7 @@ pod 'RIBs', '~> 0.9'
 To integrate RIBs into your project using Carthage add the following to your `Cartfile`:
 
 ```ruby
-github "uber/RIBs" ~> 0.9
+github "uber/RIBs" ~> 1.0
 ```
 
 ## Related projects
