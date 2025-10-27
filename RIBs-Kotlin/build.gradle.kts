@@ -1,18 +1,15 @@
 plugins {
-    kotlin("multiplatform") version "1.9.22"
-    id("com.android.library") version "8.2.1"
+    kotlin("multiplatform") version "2.0.0"
+    id("com.android.library") version "8.3.0"
     `maven-publish`
 }
 
 group = "com.uber.rib"
-version = "0.16.3"
-
-repositories {
-    mavenCentral()
-    google()
-}
+version = "0.17.0"
 
 kotlin {
+    jvmToolchain(17)
+
     // Android target
     androidTarget {
         publishLibraryVariants("release", "debug")
@@ -24,17 +21,15 @@ kotlin {
     iosSimulatorArm64()
 
     // JVM target (for desktop/server)
-    jvm {
-        jvmToolchain(17)
-    }
+    jvm()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 // RxJava/RxSwift equivalent for multiplatform
                 api("io.reactivex.rxjava3:rxjava:3.1.8")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.8.0")
             }
         }
 
@@ -48,6 +43,7 @@ kotlin {
             dependencies {
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+                implementation("androidx.core:core-ktx:1.12.0")
             }
         }
 
@@ -81,11 +77,16 @@ android {
 
     defaultConfig {
         minSdk = 21
+        targetSdk = 34
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig = false
     }
 }
 
