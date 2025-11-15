@@ -17,7 +17,7 @@
 import Foundation
 
 /// Base class of an `Interactor` that actually has an associated `Presenter` and `View`.
-nonisolated open class PresentableInteractor<PresenterType: Presentable & SendableMetatype>: Interactor, @unchecked Sendable {
+nonisolated open class PresentableInteractor<PresenterType: Presentable/* & SendableMetatype*/>: Interactor, @unchecked Sendable {
 
     /// The `Presenter` associated with this `Interactor`.
     public let presenter: PresenterType
@@ -84,6 +84,9 @@ nonisolated open class PresentableInteractor<PresenterType: Presentable & Sendab
     // MARK: - Private
 
     deinit {
-        LeakDetector.instance.expectDeallocate(object: presenter as AnyObject)
+        nonisolated(unsafe) let presenter = self.presenter
+        Task { @MainActor in
+            let _ = LeakDetector.instance.expectDeallocate(object: presenter as AnyObject)
+        }
     }
 }

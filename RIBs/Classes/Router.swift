@@ -222,6 +222,10 @@ nonisolated open class Router<InteractorType>: Routing {
 
         deinitDisposable.dispose()
 
-        LeakDetector.instance.expectDeallocate(object: interactable)
+        nonisolated(unsafe) let interactable = self.interactable
+        Task { @MainActor in
+            let _ = LeakDetector.instance.expectDeallocate(object: interactable)
+        }
+        
     }
 }

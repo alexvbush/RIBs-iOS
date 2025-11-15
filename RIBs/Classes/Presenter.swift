@@ -18,7 +18,7 @@ import Foundation
 
 /// The base protocol for all `Presenter`s.
 @MainActor
-public protocol Presentable: AnyObject & SendableMetatype {
+public protocol Presentable: AnyObject/* & SendableMetatype */ {
     associatedtype Listener
         
     nonisolated var listener: Listener? { get set }

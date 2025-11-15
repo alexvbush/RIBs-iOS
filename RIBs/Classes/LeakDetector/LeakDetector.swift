@@ -51,10 +51,11 @@ public protocol LeakDetectionHandle {
 /// A `Router` that owns an `Interactor` might for example expect its `Interactor` be deallocated when the `Router`
 /// itself is deallocated. If the interactor does not deallocate in time, a runtime assert is triggered, along with
 /// critical logging.
+@MainActor
 public class LeakDetector {
 
     /// The singleton instance.
-    nonisolated(unsafe) public static private(set) var instance = LeakDetector()
+    public static private(set) var instance = LeakDetector()
 
     // This is used internally to be able to set mock instance in unit-tests. The public API and behavior of the public static LeakDetector instance above does not change.
     static func setInstance(_ newInstance: LeakDetector) {
